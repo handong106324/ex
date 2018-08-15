@@ -120,8 +120,8 @@ public class BigOneMiner {
     }
 
     private TradeResult selfTrade(double price, SymbolPair symbolPair) {
-        TradeResult tradeResult = bigOneExchange.tradeAnsyc(price, 500, symbolPair);
-        System.out.println("交易订单发送成功");
+        TradeResult tradeResult = bigOneExchange.tradeAnsyc(price, 10000, symbolPair);
+        System.out.println("交易订单发送成功" + tradeResult.isAllSuccess());
         return tradeResult;
     }
 

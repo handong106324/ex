@@ -38,7 +38,7 @@ public class BigOneExchange extends Exchange {
     }
 
     public TradeResult tradeAnsyc(double sellPrice,double sellAmount, SymbolPair symbolPair) {
-        return BigOneServcie.tradeAsync(sellPrice,sellAmount, symbolPair,false, 30000);
+        return BigOneServcie.tradeAsync(sellPrice,sellAmount, symbolPair,false, 600000);
     }
 
 
