@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+    <property name="log.dir" value="/Users/syd/Downloads" />
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>  %d{yyyy-MM-dd HH:mm:ss} [%-5level] [%thread] %logger{36} [%M %L] - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--  <appender name="stash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">-->
+        <!--<destination>soeasylogserver:9514</destination>&lt;!&ndash;&lt;!&ndash;统一使用这个服务器和端口&ndash;&gt;&ndash;&gt;-->
+        <!--<keepAliveDuration>5 minutes</keepAliveDuration>-->
+        <!--<timeZone>GMT+8</timeZone>-->
+        <!--<encoder class="net.logstash.logback.encoder.LogstashEncoder">-->
+            <!--<customFields>{"appname":"riskmanage.souyidai.com"}</customFields>&lt;!&ndash;&lt;!&ndash;-自定义app名称，不要重叠否则日志就混乱了&ndash;&gt;&ndash;&gt;-->
+        <!--</encoder>-->
+    <!--</appender>-->
+
+<!--用户操作日志-->
+    <appender name="operation" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>  %d{yyyy-MM-dd HH:mm:ss} [%-5level] [%thread] %logger{36} [%M %L] - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--使用MDC 根据loanType 切分文件-->
+    <appender name="SIFT"
+              class="ch.qos.logback.classic.sift.SiftingAppender">
+        <discriminator>
+            <!--不支持按照时间进行滚动，但是可以在key里拼上时间-->
+            <key>disType</key>
+            <defaultValue>default</defaultValue>
+        </discriminator>
+        <sift>
+            <!--好像只支持FileAppender，不支持RollingFileAppender-->
+            <appender name="" class="ch.qos.logback.core.FileAppender">
+                <!--决定文件名的参数-->
+                <file>${log.dir}/risk-${disType}.log</file>
+                <layout class="ch.qos.logback.classic.PatternLayout">
+                    <pattern> %d{yyyy-MM-dd HH:mm:ss} [%-5level] [%thread] %logger{36} [%M %L] - %msg%n%rEx</pattern>
+                </layout>
+            </appender>
+        </sift>
+    </appender>
+
+
+    <logger name="net.paoding" level="error" additivity="false">
+        <appender-ref ref="STDOUT" />
+        <!--<appender-ref ref="stash" />-->
+    </logger>
+
+
+
+    <!--只需要标准输出即可-->
+    <logger name="d.trade" level="INFO" additivity="false">
+        <appender-ref ref="STDOUT" />
+    </logger>
+
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="d.trade"></appender-ref>
+    </root>
+
+</configuration>
