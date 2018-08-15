@@ -1,5 +1,6 @@
 package com.dong.invest.model;
 
+import com.dong.invest.model.ex.bigone.BigOneOrder;
 import com.dong.invest.model.pairs.SymbolPair;
 import d.trade.duichong.CurrentMarketInfo;
 import d.trade.duichong.TradeResult;
@@ -18,6 +19,10 @@ public abstract class Exchange {
      */
     public abstract List<SymbolPair> getAllSymbolPairs();
 
+    public abstract BigOneOrder createOrder(double sellPrice, double sellAmount, SymbolPair symbolPair, boolean isBuy);
+
+    public abstract TradeResult tradeAnsyc(double sellPrice, double sellAmount, SymbolPair symbolPair);
+
     public String getName() {
         return name;
     }
@@ -31,4 +36,6 @@ public abstract class Exchange {
     public abstract TradeResult buy(double buyPrice,double buyAmount, SymbolPair symbolPair);
 
     public abstract TradeResult sell(double sellPrice,double sellAmount, SymbolPair symbolPair);
+
+    public abstract BigOneOrder cancelOrder(String id) throws Exception;
 }

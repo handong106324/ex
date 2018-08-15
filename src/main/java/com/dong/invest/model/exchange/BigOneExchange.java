@@ -33,10 +33,12 @@ public class BigOneExchange extends Exchange {
         return BigOneServcie.trade(sellPrice,sellAmount, symbolPair,false);
     }
 
+    @Override
     public BigOneOrder createOrder(double sellPrice, double sellAmount, SymbolPair symbolPair, boolean isBuy) {
         return BigOneServcie.createOrder(symbolPair.getMarketId(),isBuy?"BID":"ASK",sellPrice+"",""+sellAmount);
     }
 
+    @Override
     public TradeResult tradeAnsyc(double sellPrice,double sellAmount, SymbolPair symbolPair) {
         return BigOneServcie.tradeAsync(sellPrice,sellAmount, symbolPair,false, 600000);
     }
@@ -47,6 +49,7 @@ public class BigOneExchange extends Exchange {
         return "B1";
     }
 
+    @Override
     public BigOneOrder cancelOrder(String id) throws Exception {
         return BigOneServcie.cancelOrder(id);
     }
