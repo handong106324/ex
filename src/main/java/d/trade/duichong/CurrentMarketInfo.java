@@ -38,6 +38,7 @@ public class CurrentMarketInfo {
         this.bidAmount = bidAmount;
     }
 
+
     @Override
     public String toString() {
         return "CurrentMarketInfo{" +
