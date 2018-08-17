@@ -50,13 +50,13 @@ public class CoinParkMiner {
 
         CoinParkServcie.getAccount();
 
-        String url ="https://api.coinpark.cc/v1/mdata";
-
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("cmd", "api/pairList");
-        jsonObject.put("body", new HashMap<String,String>());
-        String res = utils.HttpUtil.doPost(url,jsonObject);
-        System.out.println(res);
+//        String url ="https://api.coinpark.cc/v1/mdata";
+//
+//        JSONObject jsonObject = new JSONObject();
+//        jsonObject.put("cmd", "api/pairList");
+//        jsonObject.put("body", new HashMap<String,String>());
+//        String res = utils.HttpUtil.doPost(url,jsonObject);
+//        System.out.println(res);
 //        logStatus(file,symbolPair,logs);
         //买卖和跑
 //        int j = 0;

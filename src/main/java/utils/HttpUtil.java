@@ -160,7 +160,7 @@ public class HttpUtil {
      * @return
      */
     public static String doPost(String apiUrl) {
-        return doPost(apiUrl, new HashMap<String, Object>());
+        return doPost(apiUrl, new HashMap<String, String>());
     }
 
     /**
@@ -170,7 +170,7 @@ public class HttpUtil {
      * @return
      */
 
-    public static String doPost(String apiUrl, Map<String, Object> params) {
+    public static String doPost(String apiUrl, Map<String, String> params) {
         CloseableHttpClient httpClient = HttpClients.createDefault();
         String httpStr = null;
         HttpPost httpPost = new HttpPost(apiUrl);
@@ -178,7 +178,7 @@ public class HttpUtil {
         try {
             httpPost.setConfig(requestConfig);
             List<NameValuePair> pairList = new ArrayList<>(params.size());
-            for (Map.Entry<String, Object> entry : params.entrySet()) {
+            for (Map.Entry<String, String> entry : params.entrySet()) {
                 NameValuePair pair = new BasicNameValuePair(entry.getKey(), entry
                         .getValue().toString());
                 pairList.add(pair);

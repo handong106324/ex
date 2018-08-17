@@ -5,10 +5,10 @@ import com.ApiKey;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.bigone.BigOneServcie;
 import com.binance.util.CryptUtil;
 import com.dong.invest.model.ex.bigone.*;
 import com.dong.invest.model.pairs.SymbolPair;
+import com.okcoin.rest.MD5Util;
 import com.utils.ExchangeUrlUtils;
 import d.trade.duichong.CurrentMarketInfo;
 import d.trade.duichong.TradeResult;
@@ -67,18 +67,20 @@ public class CoinParkServcie {
     public static List<BigOneAsset>  getAccount() throws Exception {
         String url = ExchangeUrlUtils.CP_API_URL +"/v1/transfer";
         ApiKey apiKey = ApiFactory.getKey("CP");
-        JSONObject param = new JSONObject();
-        JSONObject cmdObj = new JSONObject();
+//        Map<String,String> param = new HashMap<>();
+        Map<String,String> cmdObj = new HashMap<>();
         cmdObj.put("cmd","transfer/assets");
-        cmdObj.put("body",new JSONObject());
-        JSONArray cmds = new JSONArray();
-        cmds.add(cmdObj);
-        param.put("cmds",cmds);
-        param.put("key", apiKey.getApiKey());
-        param.put("sign", CryptUtil.hmacMD5(cmds.toJSONString(), apiKey.getSecret()));
+        cmdObj.put("body","{}");
+
+//        JSONArray cmds = new JSONArray();
+//        cmds.add(cmdObj);
+//        param.put("cmds",cmds.toJSONString());
+        cmdObj.put("apiKey", apiKey.getApiKey());
+        String sign = MD5Util.buildMysignV1(cmdObj, apiKey.getSecret());
 //        param.put("sign", HMAC.encryptHMAC(cmds.toJSONString(),key));
 
-        String res = HttpUtil.doPost(url, param);
+        cmdObj.put("sign", sign);
+        String res = HttpUtil.doPost(url, cmdObj);
         System.out.println("res:"+res);
         return new ArrayList<>();
     }
@@ -159,42 +161,6 @@ public class CoinParkServcie {
         String side = "ASK";
 
         TradeResult tradeResult = new TradeResult();
-
-        try {
-            BigOneOrder orderSell = createOrder(symbolPair.getRealToken() + "-" + symbolPair.getBasicToken(),side, ""+price, ""+amount);
-            side = "BID";
-            BigOneOrder orderBuy = createOrder(symbolPair.getRealToken() + "-" + symbolPair.getBasicToken(),side, ""+price, ""+amount);
-
-            long start = System.currentTimeMillis();
-            while (orderBuy.getState().equals("PENDING") || orderSell.getState().equals("PENDING")) {
-                orderBuy = BigOneServcie.getOrder(orderBuy.getId());
-                orderSell = BigOneServcie.getOrder(orderSell.getId());
-
-                if ((System.currentTimeMillis() - start) > timeOut) {
-                    if (orderBuy.getState().equals("PENDING")) {
-                        cancelOrder(orderBuy.getId());
-                    }
-
-                    if (orderSell.getState().equals("PENDING")) {
-                        cancelOrder(orderSell.getId());
-                    }
-                }
-            }
-
-            orderBuy = BigOneServcie.getOrder(orderBuy.getId());
-            orderSell = BigOneServcie.getOrder(orderSell.getId());
-
-            if (orderBuy.getState().equals("FILLED") && orderSell.getState().equals("FILLED")) {
-                tradeResult.setAllSuccess(true);
-            }
-            if (orderBuy.getState().equals("CANCELED") && orderSell.getState().equals("CANCELED")) {
-                tradeResult.setAllSuccess(true);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-
-        }
 
         return tradeResult;
     }

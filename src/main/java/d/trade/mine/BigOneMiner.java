@@ -1,6 +1,6 @@
 package d.trade.mine;
 
-import com.bigone.BigOneServcie;
+import com.bigone.BigOneClient;
 import com.dong.invest.model.ex.bigone.BigOneAsset;
 import com.dong.invest.model.ex.bigone.BigOneOrder;
 import com.dong.invest.model.ex.bigone.BigOneTicker;
@@ -67,7 +67,7 @@ public class BigOneMiner {
                 logs.add("----每小时统计----");
                 logStatus(file,symbolPair, logs);
             }
-            BigMinerStatus bigMinerStatus = BigOneServcie.getOneMiner();
+            BigMinerStatus bigMinerStatus = BigOneClient.getOneMiner();
             if (bigMinerStatus.getTradeMineOne() > 2950000) {
                 String nowDateStr = simpleDateFormat.format(new Date());
                 Date nowDate = simpleDateFormat.parse(nowDateStr);
@@ -78,7 +78,7 @@ public class BigOneMiner {
 
             }
 
-            BigOneTicker bigOneTicker = BigOneServcie.getTicker(symbolPair);
+            BigOneTicker bigOneTicker = BigOneClient.getTicker(symbolPair);
 
             double dif = bigOneTicker.getAsk().getPrice() - bigOneTicker.getBid().getPrice();
             if (dif > basic) {
@@ -96,7 +96,7 @@ public class BigOneMiner {
     }
 
     private void logStatus(File file, SymbolPair symbolPair, List<String> logs) throws Exception {
-        List<BigOneAsset> bigOneAssetsNOw = BigOneServcie.getAccount();
+        List<BigOneAsset> bigOneAssetsNOw = BigOneClient.getAccount();
         BigOneAsset oneAsset1 = findOneAssets(bigOneAssetsNOw, symbolPair.getRealToken());
         BigOneAsset usdtAsset1 = findOneAssets(bigOneAssetsNOw, symbolPair.getBasicToken());
 
@@ -137,7 +137,7 @@ public class BigOneMiner {
         System.out.println(bigOneOrder);
         int cunt = 0;
         while (bigOneOrder.getState().equals("PENDING")) {
-            bigOneOrder = BigOneServcie.getOrder(bigOneOrder.getId());
+            bigOneOrder = BigOneClient.getOrder(bigOneOrder.getId());
             System.out.println(bigOneOrder.getState());
             if (cunt ++ > 5) {
                 bigOneOrder = bigOneExchange.cancelOrder(bigOneOrder.getId());
