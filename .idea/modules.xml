@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/dex.iml" filepath="$PROJECT_DIR$/dex.iml" />
+      <module fileurl="file://$PROJECT_DIR$/okex.iml" filepath="$PROJECT_DIR$/okex.iml" />
     </modules>
   </component>
 </project>

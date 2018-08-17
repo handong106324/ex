@@ -1,13 +1,8 @@
 package com.dong;
 
-import com.chen.service.BigOneServcie;
 import com.chen.service.CoinParkServcie;
-import com.dong.invest.model.ex.bigone.BigOneTicker;
-import com.dong.invest.model.ex.bigone.BigOrderBook;
 import com.dong.invest.model.ex.bigone.BigPrice;
 import com.dong.invest.model.pairs.SymbolPair;
-import d.trade.duichong.CurrentMarketInfo;
-import d.trade.duichong.TradeResult;
 import org.junit.Test;
 
 import java.text.DecimalFormat;

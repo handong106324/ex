@@ -1,10 +1,10 @@
 package d.trade.mine;
 
-import com.chen.service.BigOneServcie;
+import com.bigone.BigOneServcie;
 import com.dong.invest.model.ex.bigone.BigOneAsset;
 import com.dong.invest.model.ex.bigone.BigOneOrder;
 import com.dong.invest.model.ex.bigone.BigOneTicker;
-import com.dong.invest.model.exchange.BigOneExchange;
+import com.exchange.BigOneExchange;
 import com.dong.invest.model.pairs.SymbolPair;
 import d.trade.duichong.TradeResult;
 import org.apache.commons.io.FileUtils;

@@ -133,6 +133,7 @@ public class HttpUtil {
         try {
             HttpGet httpPost = new HttpGet(apiUrl);
 
+            httpPost.addHeader("Content-Type","application/x-www-form-urlencoded");
             if (StringUtils.isNotBlank(token)) {
                 httpPost.addHeader("Authorization","Bearer " +  token);
             }

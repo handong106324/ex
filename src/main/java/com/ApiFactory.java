@@ -11,7 +11,7 @@ public class ApiFactory {
     public static ApiKey getKey(String exName) {
         List<String> fileContents = null;
         try {
-            fileContents = FileUtils.readLines(new File("/Users/syd/Documents/blk.txt"));
+            fileContents = FileUtils.readLines(new File("/Users/handong/Documents/blk.txt"));
         } catch (IOException e) {
             return new ApiKey();
         }

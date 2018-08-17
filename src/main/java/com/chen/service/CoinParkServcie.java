@@ -1,23 +1,21 @@
 package com.chen.service;
 
 import com.ApiFactory;
+import com.ApiKey;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.bigone.BigOneServcie;
+import com.binance.util.CryptUtil;
 import com.dong.invest.model.ex.bigone.*;
 import com.dong.invest.model.pairs.SymbolPair;
 import com.utils.ExchangeUrlUtils;
-import com.utils.JwtToken;
 import d.trade.duichong.CurrentMarketInfo;
 import d.trade.duichong.TradeResult;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import utils.HttpUtil;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -52,14 +50,36 @@ public class CoinParkServcie {
 
 
     /**
+     PATH: apipath
+     METHOD: POST
+     PARAMS:
+     {
+     "cmds": "[{\"cmd\":\"user/userInfo\",\"body\":{}}]",
+     "apikey":"52135958969bedca0809ac10b9caba758022b0a6",
+     "sign":"6a21e39e3f68b6fc2227c4074c7e6a6c"
+     }
+
+     var sign = CryptoJS.HmacMD5(cmds, secret).toString();//6a21e39e3f68b6fc2227c4074c7e6a6c
 
      * @return
      * @throws Exception
      */
     public static List<BigOneAsset>  getAccount() throws Exception {
-        String url = ExchangeUrlUtils.CP_API_URL + "/viewer/accounts";
+        String url = ExchangeUrlUtils.CP_API_URL +"/v1/transfer";
+        ApiKey apiKey = ApiFactory.getKey("CP");
+        JSONObject param = new JSONObject();
+        JSONObject cmdObj = new JSONObject();
+        cmdObj.put("cmd","transfer/assets");
+        cmdObj.put("body",new JSONObject());
+        JSONArray cmds = new JSONArray();
+        cmds.add(cmdObj);
+        param.put("cmds",cmds);
+        param.put("key", apiKey.getApiKey());
+        param.put("sign", CryptUtil.hmacMD5(cmds.toJSONString(), apiKey.getSecret()));
+//        param.put("sign", HMAC.encryptHMAC(cmds.toJSONString(),key));
 
-
+        String res = HttpUtil.doPost(url, param);
+        System.out.println("res:"+res);
         return new ArrayList<>();
     }
 
@@ -96,7 +116,7 @@ public class CoinParkServcie {
         return getMarkets();
     }
 
-    public CurrentMarketInfo getTickers(SymbolPair symbolPair) {
+    public static CurrentMarketInfo getTickers(SymbolPair symbolPair) {
         CurrentMarketInfo currentMarketInfo = new CurrentMarketInfo();
         BigOneTicker ticker = getTicker(symbolPair);
         currentMarketInfo.setAskAmount(ticker.getAsk().getAmount());

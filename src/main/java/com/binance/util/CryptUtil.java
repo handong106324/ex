@@ -10,9 +10,13 @@ public class CryptUtil {
 
     private static final String HMAC_SHA256 = "HmacSHA256";
     private static final String HMAC_SHA512 = "HmacSHA512";
+    private static final String HMAC_DD5 = "HmacMD5";
 
     public static String hmacSHA512(String data, String key) {
         return hmacHash(data, key, HMAC_SHA512);
+    }
+    public static String hmacMD5(String data, String key) {
+        return hmacHash(data, key, HMAC_DD5);
     }
 
     public static String hmacSHA256(String data, String key) {
