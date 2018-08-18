@@ -12,6 +12,8 @@ public class BigPrice {
         this.amount = amount;
         this.price = price;
     }
+
+    public BigPrice(){}
     public void setPrice(Double price) {
         this.price = price;
     }

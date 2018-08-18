@@ -69,7 +69,7 @@ public class BigOneAPITest {
         double highest = 0;
         Exchange highExchange = null;
 
-        double lowPrice = 0;
+        double lowPrice = tickers.get(0).getAsk().getPrice();
         for (BigOneTicker ticker : tickers) {
             //交易所卖价 < 另外交易所的买价
             if (ticker.getAsk().getPrice().doubleValue() < lowPrice) {

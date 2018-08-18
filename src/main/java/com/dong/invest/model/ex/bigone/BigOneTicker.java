@@ -17,6 +17,8 @@ public class BigOneTicker {
     private BigPrice ask;
     private Exchange exchange;
 
+    public BigOneTicker(){}
+
     public Double getVolume() {
         return volume;
     }
