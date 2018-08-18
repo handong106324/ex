@@ -29,6 +29,12 @@ public class BigOneAPITest {
 
         BigOneExchange bigOneClient = new BigOneExchange();
 
+        SymbolPair symbolPair = new SymbolPair();
+        symbolPair.setRealToken("btc");
+        symbolPair.setBasicToken("usdt");
+        symbolPair.setMarketId("btcusdt");
+        System.out.println(huoBiExchange.getTicker(symbolPair));
+
         List<String> haveCoins = new ArrayList<>();
         for (String coin : bigOneClient.symbols().keySet()) {
             if (huoBiExchange.symbols().containsKey(coin)) {
@@ -69,7 +75,7 @@ public class BigOneAPITest {
         double highest = 0;
         Exchange highExchange = null;
 
-        double lowPrice = tickers.get(0).getAsk().getPrice();
+        double lowPrice = 999999999;
         for (BigOneTicker ticker : tickers) {
             //交易所卖价 < 另外交易所的买价
             if (ticker.getAsk().getPrice().doubleValue() < lowPrice) {
