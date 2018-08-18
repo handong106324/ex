@@ -3,6 +3,7 @@ package com.exchange;
 import com.chen.service.CoinParkServcie;
 import com.dong.invest.model.Exchange;
 import com.dong.invest.model.ex.bigone.BigOneOrder;
+import com.dong.invest.model.ex.bigone.BigOneTicker;
 import com.dong.invest.model.pairs.SymbolPair;
 import d.trade.duichong.CurrentMarketInfo;
 import d.trade.duichong.TradeResult;
@@ -45,6 +46,11 @@ public class CoinParkExchange extends Exchange {
     @Override
     public BigOneOrder cancelOrder(String id) throws Exception {
         return CoinParkServcie.cancelOrder(id);
+    }
+
+    @Override
+    public BigOneTicker getTicker(SymbolPair symbo) {
+        return CoinParkServcie.getTicker(symbo);
     }
 
     @Override

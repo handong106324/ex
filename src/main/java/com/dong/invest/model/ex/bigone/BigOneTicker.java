@@ -1,5 +1,7 @@
 package com.dong.invest.model.ex.bigone;
 
+import com.dong.invest.model.Exchange;
+
 public class BigOneTicker {
 
     private Double volume;
@@ -13,6 +15,7 @@ public class BigOneTicker {
     private Double close;
     private BigPrice bid;
     private BigPrice ask;
+    private Exchange exchange;
 
     public Double getVolume() {
         return volume;
@@ -117,6 +120,14 @@ public class BigOneTicker {
                 ", bid=" + bid +
                 ", ask=" + ask +
                 '}';
+    }
+
+    public Exchange getExchange() {
+        return exchange;
+    }
+
+    public void setExchange(Exchange exchange) {
+        this.exchange = exchange;
     }
 }
 

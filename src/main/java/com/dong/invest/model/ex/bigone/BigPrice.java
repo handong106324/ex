@@ -8,6 +8,10 @@ public class BigPrice {
         return price;
     }
 
+    public BigPrice(double price,double amount) {
+        this.amount = amount;
+        this.price = price;
+    }
     public void setPrice(Double price) {
         this.price = price;
     }

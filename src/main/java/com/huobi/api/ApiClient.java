@@ -1,5 +1,9 @@
 package com.huobi.api;
 
+import com.alibaba.fastjson.JSONObject;
+import com.dong.invest.model.ex.bigone.BigOneTicker;
+import com.dong.invest.model.ex.bigone.BigPrice;
+import com.dong.invest.model.pairs.SymbolPair;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -10,10 +14,12 @@ import com.huobi.request.CreateOrderRequest;
 import com.huobi.request.DepthRequest;
 import com.huobi.request.IntrustOrdersDetailRequest;
 import com.huobi.response.*;
+import com.utils.ExchangeUrlUtils;
 import okhttp3.*;
 import okhttp3.OkHttpClient.Builder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.HttpUtil;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -162,6 +168,26 @@ public class ApiClient {
         MergedResponse resp = get("/market/detail/merged", map, new TypeReference<MergedResponse<List<Merged>>>() {
         });
         return resp;
+    }
+
+    public BigOneTicker ticker(SymbolPair symbol) {
+        HashMap map = new HashMap();
+        map.put("symbol", symbol.getMarketId());
+        String resp = HttpUtil.doGet(ExchangeUrlUtils.HB_API_URL+"/market/detail/merged",map);
+        JSONObject jsonObject = JSONObject.parseObject(resp).getJSONObject("tick");
+        BigOneTicker bigOneTicker = new BigOneTicker();
+        bigOneTicker.setAsk(new BigPrice(jsonObject.getJSONArray("ask").getDouble(0),
+                jsonObject.getJSONArray("ask").getDouble(1)));
+
+        bigOneTicker.setBid(new BigPrice(jsonObject.getJSONArray("bid").getDouble(0),
+                jsonObject.getJSONArray("bid").getDouble(1)));
+        bigOneTicker.setClose(jsonObject.getDoubleValue("close"));
+        bigOneTicker.setVolume(jsonObject.getDoubleValue("vol"));
+        bigOneTicker.setOpen(jsonObject.getDoubleValue("open"));
+        bigOneTicker.setLow(jsonObject.getDoubleValue("low"));
+        bigOneTicker.setHigh(jsonObject.getDoubleValue("high"));
+        bigOneTicker.setMarket_id(symbol.getMarketId());
+        return bigOneTicker;
     }
 
     /**

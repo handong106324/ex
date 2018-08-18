@@ -59,11 +59,7 @@
           <element id="library" level="project" name="Maven: com.google.code.findbugs:jsr305:1.3.9" />
           <element id="library" level="project" name="Maven: org.apache.httpcomponents:httpclient:4.5.2" />
           <element id="library" level="project" name="Maven: org.apache.httpcomponents:httpcore:4.4.4" />
-          <element id="library" level="project" name="Maven: commons-codec:commons-codec:1.9" />
           <element id="library" level="project" name="Maven: com.alibaba:fastjson:1.2.41" />
-          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.8.7" />
-          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.8.0" />
-          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.8.7" />
           <element id="library" level="project" name="Maven: org.apache.commons:commons-lang3:3.4" />
           <element id="library" level="project" name="Maven: org.springframework:spring-web:4.3.9.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-aop:4.3.9.RELEASE" />
@@ -78,10 +74,20 @@
           <element id="library" level="project" name="Maven: com.google.api.client:google-api-client-util:1.2.3-alpha" />
           <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-core-asl:1.5.7" />
           <element id="library" level="project" name="Maven: com.auth0:java-jwt:3.4.0" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.8.7" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.8.0" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.8.7" />
           <element id="library" level="project" name="Maven: com.squareup.okhttp3:okhttp:3.6.0" />
           <element id="library" level="project" name="Maven: com.squareup.okio:okio:1.11.0" />
           <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.24" />
-          <element id="library" level="project" name="Maven: com.google.code.gson:gson:2.3" />
+          <element id="library" level="project" name="Maven: org.riversun:okhttp3-cookie-helper:1.0.1" />
+          <element id="library" level="project" name="Maven: com.google.code.gson:gson:2.8.2" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-jdbc:unknown" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-tx:unknown" />
+          <element id="library" level="project" name="Maven: com.zaxxer:HikariCP:unknown" />
+          <element id="library" level="project" name="Maven: io.springfox:springfox-swagger2:unknown" />
+          <element id="library" level="project" name="Maven: io.springfox:springfox-swagger-ui:unknown" />
+          <element id="library" level="project" name="Maven: commons-codec:commons-codec:unknown" />
         </element>
       </element>
       <element id="directory" name="META-INF">

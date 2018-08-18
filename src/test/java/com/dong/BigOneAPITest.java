@@ -1,11 +1,19 @@
 package com.dong;
 
+import com.bigone.BigOneClient;
 import com.chen.service.CoinParkServcie;
+import com.dong.invest.model.Exchange;
+import com.dong.invest.model.ex.bigone.BigOneTicker;
 import com.dong.invest.model.ex.bigone.BigPrice;
 import com.dong.invest.model.pairs.SymbolPair;
+import com.exchange.BigOneExchange;
+import com.exchange.HuoBiExchange;
+import com.huobi.response.MergedResponse;
+import com.huobi.response.Symbol;
 import org.junit.Test;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BigOneAPITest {
@@ -17,13 +25,76 @@ public class BigOneAPITest {
      */
     @Test
     public void testBigOne() throws Exception {
-        CoinParkServcie servcie = new CoinParkServcie();
+        HuoBiExchange huoBiExchange = new HuoBiExchange();
 
-        List<SymbolPair> pairs = servcie.getMarkets();
-        for (SymbolPair symbolPair : pairs) {
-            System.out.println(symbolPair.getRealToken() +"-" + symbolPair.getBasicToken());
+        BigOneExchange bigOneClient = new BigOneExchange();
+
+        List<String> haveCoins = new ArrayList<>();
+        for (String coin : bigOneClient.symbols().keySet()) {
+            if (huoBiExchange.symbols().containsKey(coin)) {
+                haveCoins.add(coin);
+            }
+        }
+
+        List<Exchange> exchanges = new ArrayList<>();
+        exchanges.add(bigOneClient);
+        exchanges.add(huoBiExchange);
+
+        int time = 0;
+        while (true) {
+                for (String coin : haveCoins) {
+                    try {
+                        checkPriceCanBuy(coin,exchanges);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println(coin + "决策第"+time ++ +"轮结束");
+
+                }
+
+
         }
     }
+
+    private void checkPriceCanBuy(String coin, List<Exchange> exchanges) {
+        List<BigOneTicker> tickers = new ArrayList<>();
+        for (Exchange exchange : exchanges) {
+            BigOneTicker ticker = exchange.getTicker(exchange.symbols.get(coin));
+            tickers.add(ticker);
+            ticker.setExchange(exchange);
+        }
+
+        Exchange maxExchange = null;
+
+        double highest = 0;
+        Exchange highExchange = null;
+
+        double lowPrice = 0;
+        for (BigOneTicker ticker : tickers) {
+            //交易所卖价 < 另外交易所的买价
+            if (ticker.getAsk().getPrice().doubleValue() < lowPrice) {
+                lowPrice = ticker.getAsk().getPrice().doubleValue();
+                maxExchange = ticker.getExchange();
+            }
+
+            if (ticker.getBid().getPrice().doubleValue() > highest ) {
+                highest = ticker.getBid().getPrice().doubleValue();
+                highExchange = ticker.getExchange();
+            }
+
+
+        }
+        System.out.println(coin +": " + maxExchange.getName() +" "+lowPrice + ":" + highExchange.getName() + " " + highest);
+
+        if (maxExchange != null && highExchange != null) {
+            if (lowPrice > highest) {
+                System.out.println("决策满足条件");
+            } else {
+
+            }
+        }
+    }
+
 
     public double[] countPriceAndAmount(List<BigPrice> bigPrices) {
         double amount = 0;
