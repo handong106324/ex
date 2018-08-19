@@ -49,7 +49,11 @@ public class BigOneClient {
     public static  List<SymbolPair> getMarkets() {
         String tickersUrl = ExchangeUrlUtils.B1_API_URL + "/markets";
         String result = send(tickersUrl);
+        if (StringUtils.isBlank(result)) {
+            return new ArrayList<>();
+        }
         JSONObject jsonObject = JSONObject.parseObject(result);
+
         List<SymbolPair> realList = new ArrayList<>();
         JSONArray array = jsonObject.getJSONArray("data");
         for (Object o : array) {

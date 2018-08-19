@@ -1,15 +1,11 @@
 package com.dong;
 
-import com.bigone.BigOneClient;
-import com.chen.service.CoinParkServcie;
 import com.dong.invest.model.Exchange;
 import com.dong.invest.model.ex.bigone.BigOneTicker;
 import com.dong.invest.model.ex.bigone.BigPrice;
 import com.dong.invest.model.pairs.SymbolPair;
 import com.exchange.BigOneExchange;
 import com.exchange.HuoBiExchange;
-import com.huobi.response.MergedResponse;
-import com.huobi.response.Symbol;
 import org.junit.Test;
 
 import java.text.DecimalFormat;
@@ -28,12 +24,6 @@ public class BigOneAPITest {
         HuoBiExchange huoBiExchange = new HuoBiExchange();
 
         BigOneExchange bigOneClient = new BigOneExchange();
-
-        SymbolPair symbolPair = new SymbolPair();
-        symbolPair.setRealToken("btc");
-        symbolPair.setBasicToken("usdt");
-        symbolPair.setMarketId("btcusdt");
-        System.out.println(huoBiExchange.getTicker(symbolPair));
 
         List<String> haveCoins = new ArrayList<>();
         for (String coin : bigOneClient.symbols().keySet()) {
@@ -69,7 +59,6 @@ public class BigOneAPITest {
             tickers.add(ticker);
             ticker.setExchange(exchange);
         }
-
         Exchange maxExchange = null;
 
         double highest = 0;
@@ -90,10 +79,11 @@ public class BigOneAPITest {
 
 
         }
-        System.out.println(coin +": " + maxExchange.getName() +" "+lowPrice + ":" + highExchange.getName() + " " + highest);
 
         if (maxExchange != null && highExchange != null) {
             if (lowPrice > highest) {
+                System.out.println(coin +": " + maxExchange.getName() +" "+lowPrice + ":" + highExchange.getName() + " " + highest);
+
                 System.out.println("决策满足条件");
             } else {
 
