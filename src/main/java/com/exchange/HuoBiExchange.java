@@ -69,6 +69,11 @@ public class HuoBiExchange extends Exchange {
     }
 
     @Override
+    public String getName() {
+        return "HB";
+    }
+
+    @Override
     public BigOneTicker getTicker(SymbolPair symbo) {
        return apiClient.ticker(symbo);
 
