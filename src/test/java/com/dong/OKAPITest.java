@@ -3,8 +3,11 @@ package com.dong;
 import com.dong.invest.model.Exchange;
 import com.dong.invest.model.ex.bigone.BigOneTicker;
 import com.dong.invest.model.ex.bigone.BigPrice;
+import com.dong.invest.model.pairs.SymbolPair;
 import com.exchange.BigOneExchange;
 import com.exchange.HuoBiExchange;
+import com.exchange.OKExchange;
+import com.huobi.response.Symbol;
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 
@@ -14,7 +17,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BigOneAPITest {
+public class OKAPITest {
 
     File file = new File("/Users/handong/Downloads/real.log");
 
@@ -25,37 +28,16 @@ public class BigOneAPITest {
      */
     @Test
     public void testBigOne() throws Exception {
-        HuoBiExchange huoBiExchange = new HuoBiExchange();
 
-        BigOneExchange bigOneClient = new BigOneExchange();
 
-        List<String> haveCoins = new ArrayList<>();
-        for (String coin : bigOneClient.symbols().keySet()) {
-            if (huoBiExchange.symbols().containsKey(coin)) {
-                haveCoins.add(coin);
-            }
-        }
+        OKExchange okExchange = new OKExchange();
 
-        List<Exchange> exchanges = new ArrayList<>();
-        exchanges.add(bigOneClient);
-        exchanges.add(huoBiExchange);
-
-        int time = 0;
-        while (true) {
-                for (String coin : haveCoins) {
-                    try {
-                        if (!coin.contains("usdt")) {
-                            continue;
-                        }
-                        checkPriceCanBuy(coin,exchanges);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            System.out.println("决策第"+time ++ +"轮结束");
-
-        }
+        SymbolPair symbolPair = new SymbolPair();
+        symbolPair.setMarketId("btc_usdt");
+        symbolPair.setBasicToken("usdt");
+        symbolPair.setRealToken("btc");
+        BigOneTicker ticker = okExchange.getTicker(symbolPair);
+        System.out.println(ticker);
     }
 
     private void checkPriceCanBuy(String coin, List<Exchange> exchanges) {

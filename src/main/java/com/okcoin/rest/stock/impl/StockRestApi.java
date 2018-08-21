@@ -1,9 +1,13 @@
 package com.okcoin.rest.stock.impl;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import com.dong.invest.model.pairs.SymbolPair;
+import com.huobi.response.Symbol;
 import org.apache.http.HttpException;
 
 
@@ -35,7 +39,8 @@ public class StockRestApi implements IStockRestApi{
 	 * 现货行情URL
 	 */
 	private final String TICKER_URL = "/api/v1/ticker.do?";
-	
+	private final String TICKERS_URL = "/api/v1/tickers.do";
+
 	/**
 	 * 现货市场深度URL
 	 */
@@ -92,6 +97,15 @@ public class StockRestApi implements IStockRestApi{
 			param += "symbol=" + symbol;
 		}
 		String result = httpUtil.requestHttpGet(url_prex, TICKER_URL, param);
+	    return result;
+	}
+
+	@Override
+	public String tickers() throws HttpException, IOException {
+		HttpUtilManager httpUtil = HttpUtilManager.getInstance();
+		String param = "";
+		List<SymbolPair> symbolPairs = new ArrayList<>();
+		String result = httpUtil.requestHttpGet(url_prex, TICKERS_URL, param);
 	    return result;
 	}
 

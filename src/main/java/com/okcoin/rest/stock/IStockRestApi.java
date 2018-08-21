@@ -1,7 +1,9 @@
 package com.okcoin.rest.stock;
 
 import java.io.IOException;
+import java.util.List;
 
+import com.huobi.response.Symbol;
 import org.apache.http.HttpException;
 
 
@@ -22,6 +24,7 @@ public interface IStockRestApi {
      */
     public String ticker(String symbol) throws HttpException, IOException;
 
+    public String tickers() throws HttpException,IOException;
     /**
      * 市场深度
      *

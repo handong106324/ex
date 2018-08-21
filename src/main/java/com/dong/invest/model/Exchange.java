@@ -5,7 +5,9 @@ import com.dong.invest.model.ex.bigone.BigOneTicker;
 import com.dong.invest.model.pairs.SymbolPair;
 import d.trade.duichong.CurrentMarketInfo;
 import d.trade.duichong.TradeResult;
+import org.apache.http.HttpException;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
